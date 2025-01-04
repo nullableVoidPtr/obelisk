@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 { config, lib, pkgs, ... }:
 
 {
@@ -31,7 +27,7 @@
 
     users.avery = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "www-data" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "wheel" "www-data" ];
       packages = with pkgs; [
         tree
       ];
@@ -45,13 +41,12 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
+    git
     (pkgs.callPackage <agenix/pkgs/agenix.nix> {})
   ];
 
   services.openssh.enable = true;
-
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  services.fail2ban.enable = true;
 
   system.copySystemConfiguration = true;
 
